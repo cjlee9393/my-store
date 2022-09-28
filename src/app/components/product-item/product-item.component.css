@@ -19,3 +19,11 @@
   width: 108px; 
   margin-bottom: 8px;
 }
+
+button{
+  width: 108px;
+  height: 27px; 
+  background-color: rgb(46,132,247);
+  color:white;
+  border: none;
+}
