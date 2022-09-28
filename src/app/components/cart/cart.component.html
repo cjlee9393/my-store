@@ -1,5 +1,9 @@
 <div class="cart-container">
     <div class="cart-panel">
+        <div *ngIf="!(keys.length)" class="empty-cart-message">
+            <p>Cart is empty</p>
+        </div>
+
         <div class="cart-item" *ngFor="let id of keys">
             <img src="{{ getProduct(id).url }}">
             <div class="cart-item-detail">
@@ -12,6 +16,15 @@
         <h1>Total: ${{ total }}</h1>
     </div>
     <div class="cart-panel">
+        <label for="full-name">Full Name</label><br>
+        <input type="text" name="full-name" [(ngModel)]="fullName"><br>
+        <label for="address">Address</label><br>
+        <input type="text" name="address" [(ngModel)]="address"><br>
+        <label for="credit-card-number">Credit Card Number</label><br>
+        <input type="text" name="credit-card-number" [(ngModel)]="creditCardNumber"><br>
 
+        <p>We’ll never share your payment details with anyone</p>
+
+        <button><a routerLink="/">Go To Home</a></button>
     </div>
 </div>

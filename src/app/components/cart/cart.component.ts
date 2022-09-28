@@ -16,6 +16,10 @@ export class CartComponent implements OnInit {
   quantities: number[] = [];
   total: number = 0;
 
+  fullName: string = '';
+  address: string = '';
+  creditCardNumber: string = '';
+
   constructor(private cartService: CartService, private productListService: ProductListService) { }
 
   ngOnInit(): void {
