@@ -1,1 +1,22 @@
-<p>cart works!</p>
+<div class="cart-container">
+    <div class="cart-panel">
+        <div class="cart-item" *ngFor="let id of keys">
+            <p> {{ id }} </p>
+            <img src="{{ getProduct(id).url }}">
+            <div class="cart-item-detail">
+                <p> {{ getProduct(id).name }} </p>
+                <p> {{ getProduct(id).price }} </p>
+                <select class="select-input" name="quantity">
+                    <option value="" selected disabled hidden> {{ cart.get(id) }} </option>
+                    <option value=1>1</option>
+                    <option value=2>2</option>
+                    <option value=3>3</option>
+                    <option value=4>4</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    <div class="cart-panel">
+
+    </div>
+</div>
