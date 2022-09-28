@@ -1,11 +1,17 @@
 <div class="detail-container">
-    <img src="">
+    <img src="{{ product.url }}">
     <div class="detail-item">
-        <p> name </p>
-        <p> explanation </p>
-        <p> price </p>
+        <p> {{ product.name }} </p>
+        <p> {{ product.description}} </p>
+        <p> ${{ product.price }} </p>
         <p> quantity </p>
-        <button (click)="foobar()">Add to Cart</button><br>
+        <select class="select-input" name="quantity" [(ngModel)]="quantity">
+            <option value=1>1</option>
+            <option value=2>2</option>
+            <option value=3>3</option>
+            <option value=4>4</option>
+        </select><br>
+        <button (click)="addToCart(product.id, quantity)" class="select-input"> add to cart </button><br>
         <a routerLink="/">Go to Product List</a>
     </div>
 </div>

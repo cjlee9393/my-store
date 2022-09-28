@@ -11,7 +11,7 @@ import { Product } from 'src/app/models/product';
 })
 export class ProductItemComponent implements OnInit {
   @Input() product: Product;
-  quantity: number = 0;
+  quantity: number = 1;
 
   constructor(private cartService: CartService, private productItemDetailService: ProductItemDetailService) { 
     this.product = {
@@ -27,9 +27,12 @@ export class ProductItemComponent implements OnInit {
   }
 
   addToCart(productId: number, quantity: number): void {
-    alert("Added to cart!");
-
-    this.cartService.addToCart(productId, quantity);
+    try{
+      this.cartService.addToCart(productId, quantity);
+      alert("Added to cart!");
+    }catch(err){
+      alert((err as Error).message);
+    }
   }
 
   setProduct(product: Product){

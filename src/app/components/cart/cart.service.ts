@@ -13,6 +13,13 @@ export class CartService {
   }
 
   addToCart(productId: number, quantity: number): void {
+    if (quantity <= 0){
+      const err = new Error();
+      err.name = "quantityNotPositiveError";
+      err.message = "quantity is not positive";
+      throw err;
+    }
+
     if (this.cart.has(productId)){
       this.cart.set(productId, this.cart.get(productId) as number + quantity);
     }else{

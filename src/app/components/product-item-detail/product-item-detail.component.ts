@@ -10,6 +10,7 @@ import { Product } from 'src/app/models/product';
 })
 export class ProductItemDetailComponent implements OnInit {
   product: Product;
+  quantity: number;
 
   constructor(private cartService: CartService, private productItemDetailService: ProductItemDetailService) { 
     this.product = {
@@ -19,6 +20,8 @@ export class ProductItemDetailComponent implements OnInit {
       url: "url",
       description: "description"
     }
+
+    this.quantity = 1;
   }
 
   ngOnInit(): void {
@@ -26,9 +29,12 @@ export class ProductItemDetailComponent implements OnInit {
   }
 
   addToCart(productId: number, quantity: number): void {
-    alert("Added to cart!");
-
-    this.cartService.addToCart(productId, quantity);
+    try{
+      this.cartService.addToCart(productId, quantity);
+      alert("Added to cart!");
+    }catch(err){
+      alert((err as Error).message);
+    }
   }
 
   foobar(): void {
