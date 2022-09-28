@@ -26,6 +26,10 @@ img {
   text-align: center;
 }
 
+input[type=number]::-webkit-inner-spin-button {
+  opacity: 1
+}
+
 .cart-container {
   display: flex;
   flex-direction: row;

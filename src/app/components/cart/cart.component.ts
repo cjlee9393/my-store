@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/product';
 import { CartService } from './cart.service';
 import { ProductListService } from '../product-list/product-list.service'
+import * as e from 'cors';
 
 @Component({
   selector: 'app-cart',
@@ -12,6 +13,8 @@ export class CartComponent implements OnInit {
   productList: Product[] = [];
   cart: Map<number, number> = new Map();
   keys: number[] = [];
+  quantities: number[] = [];
+  total: number = 0;
 
   constructor(private cartService: CartService, private productListService: ProductListService) { }
 
@@ -21,17 +24,34 @@ export class CartComponent implements OnInit {
 
       this.cart = this.cartService.getCart();
       this.keys = [...this.cart.keys()];
+      
+      this.quantities = [...Array(this.productList.length + 1)];
+      for (let key of this.keys){
+        this.quantities[key] = (this.cart.get(key) as number);
+      }
+
+      this.total = this.getTotal();
     })
    }
 
   changeQuantity(id: number, quantity: number): void {
-    this.cartService.changeQuantity(id, quantity);
+    if (!quantity){
+      this.keys.splice(this.keys.indexOf(id), 1)
+
+      this.quantities.splice(id, 1)
+
+      this.cartService.delFromCart(id)
+    }else{
+      this.cartService.changeQuantity(id, quantity);
+    }
+
+    this.total = this.getTotal()
   }
 
   getProduct(id: number): Product {
     for (let product of this.productList){
       if (product.id == id) return product;
-    } 
+    }
     
     const err = new Error();
     err.name = "ProductNotExistError"

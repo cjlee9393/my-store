@@ -36,6 +36,10 @@ export class CartService {
     }
   }
 
+  delFromCart(productId: number): void {
+    this.cart.delete(productId);
+  }
+
   reset(): void {
     this.cart = new Map()
   }
