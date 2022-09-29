@@ -4,7 +4,7 @@ This project is an e-commerce website – an application that allows users to vi
 
 ## Usage
 
-The project requires only `npm install` and `ng serve` to install and launch the application.
+The project requires only `npm install`, `npm install -g @angular/cli`, and `ng serve` to install and launch the application.
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 

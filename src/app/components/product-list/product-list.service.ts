@@ -11,7 +11,7 @@ export class ProductListService {
   constructor(private httpClient: HttpClient) { }
 
   getProductList(): Observable<Product[]> {
-    const path = "http://localhost:4200/assets/data.json";
+    const path = window.location.href + "assets/data.json";
 
     return (this.httpClient.get(path) as Observable<Product[]>);
   }
