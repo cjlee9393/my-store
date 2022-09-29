@@ -16,15 +16,17 @@
         <h1>Total: ${{ total }}</h1>
     </div>
     <div class="cart-panel">
-        <label for="full-name">Full Name</label><br>
-        <input type="text" name="full-name" [(ngModel)]="fullName"><br>
-        <label for="address">Address</label><br>
-        <input type="text" name="address" [(ngModel)]="address"><br>
-        <label for="credit-card-number">Credit Card Number</label><br>
-        <input type="text" name="credit-card-number" [(ngModel)]="creditCardNumber"><br>
+        <form #form="ngForm">
+            <label for="full-name">Full Name</label><br>
+            <input type="text" name="full-name" required minlength="6" [(ngModel)]="fullName"><br>
+            <label for="address">Address</label><br>
+            <input type="text" name="address" required minlength="6" [(ngModel)]="address"><br>
+            <label for="credit-card-number">Credit Card Number</label><br>
+            <input type="text" name="credit-card-number" required minlength="6" [(ngModel)]="creditCardNumber"><br>
 
-        <p>We’ll never share your payment details with anyone</p>
+            <p>We’ll never share your payment details with anyone</p>
 
-        <button routerLink="/confirmation">Submit</button>
+            <button [disabled]="form.invalid" routerLink="/confirmation">Submit</button>
+        </form>
     </div>
 </div>
