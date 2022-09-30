@@ -18,11 +18,11 @@
     <div class="cart-panel">
         <form #form="ngForm">
             <label for="full-name">Full Name</label><br>
-            <input type="text" name="full-name" required minlength="6" [(ngModel)]="fullName_" #fullName="ngModel"><br>
+            <input type="text" name="full-name" required minlength="6" pattern="^[a-zA-Z ]*$" [(ngModel)]="fullName_" #fullName="ngModel"><br>
             <label for="address">Address</label><br>
             <input type="text" name="address" required minlength="6" [(ngModel)]="address_" #address="ngModel"><br>
             <label for="credit-card-number">Credit Card Number</label><br>
-            <input type="text" name="credit-card-number" required minlength="6" [(ngModel)]="creditCardNumber_" #creditCardNumber="ngModel"><br>
+            <input type="text" name="credit-card-number" required minlength="6" pattern="^[0-9]*$" [(ngModel)]="creditCardNumber_" #creditCardNumber="ngModel"><br>
 
             <div class="error-input-message" *ngIf="fullName.invalid && fullName.dirty">
                 <div *ngIf="fullName.errors?.['required']">
@@ -30,6 +30,9 @@
                 </div>
                 <div *ngIf="fullName.errors?.['minlength']">
                   The full name must contain at least 6 characters.
+                </div>
+                <div *ngIf="fullName.errors?.['pattern']">
+                  The full name must contain only alphabets.
                 </div>
             </div>
 
@@ -47,7 +50,10 @@
                   Please provide a credit card number
                 </div>
                 <div *ngIf="creditCardNumber.errors?.['minlength']">
-                  The credit card number must contain at least 6 characters.
+                  The credit card number must contain at least 6 digits.
+                </div>
+                <div *ngIf="creditCardNumber.errors?.['pattern']">
+                  The credit card number must contain only numbers.
                 </div>
             </div>
 
