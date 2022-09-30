@@ -16,9 +16,9 @@ export class CartComponent implements OnInit {
   quantities: number[] = [];
   total: number = 0;
 
-  fullName: string = '';
-  address: string = '';
-  creditCardNumber: string = '';
+  fullName_: string = '';
+  address_: string = '';
+  creditCardNumber_: string = '';
 
   constructor(private cartService: CartService, private productListService: ProductListService) { }
 
