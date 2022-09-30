@@ -18,7 +18,7 @@ export class CartComponent implements OnInit {
 
   keys: number[] = [];
   quantities: number[] = [];
-  total: number = 0;
+  total: string = '';
 
   fullName_: string = '';
   address_: string = '';
@@ -74,7 +74,7 @@ export class CartComponent implements OnInit {
     return this.productList[idx];
   }
 
-  getTotal(): number {
+  getTotal(): string {
     let res = 0;
 
     const prices =  this.keys.map((key) => this.cart[this.cart.findIndex(item => item.id == key)].productId)
@@ -92,7 +92,7 @@ export class CartComponent implements OnInit {
       res += price * quantity;
     }
     
-    return res;
+    return res.toFixed(2)!;
   }
 
   getCart(): CartItem[] {
