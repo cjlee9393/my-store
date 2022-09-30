@@ -98,4 +98,8 @@ export class CartComponent implements OnInit {
   getCart(): CartItem[] {
     return this.cartService.getCart();
   }
+
+  resetCart(): void {
+    this.cartService.reset();
+  }
 }
