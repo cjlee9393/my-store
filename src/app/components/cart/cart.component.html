@@ -8,7 +8,7 @@
             <img src="{{ getProduct(id).url }}">
             <div class="cart-item-detail">
                 <p> {{ getProduct(id).name }} </p>
-                <p> {{ getProduct(id).price }} </p>
+                <p> ${{ getProduct(id).price }} </p>
                 <input type="number" name="quantity" class="number-input" [(ngModel)]="quantities[id]" (ngModelChange)="changeQuantity(id, quantities[id])">
             </div>
         </div>
