@@ -1,14 +1,19 @@
 import { Injectable } from '@angular/core';
+import { CartItem } from 'src/app/models/cart-item';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CartService {
-  cart: Map<number, number> = new Map();
+  cart: CartItem[];
+  id: number;
 
-  constructor() { }
+  constructor() {
+    this.cart = [];
+    this.id = 1;
+  }
 
-  getCart(): Map<number, number> {
+  getCart(): CartItem[] {
     return this.cart;
   }
 
@@ -28,34 +33,44 @@ export class CartService {
       throw err;
     }
 
-    if (this.cart.has(productId)){
-      this.cart.set(productId, this.cart.get(productId)! + quantity);
-    }else{
-      this.cart.set(productId, quantity)
-    }
+    this.cart.push({
+      id: this.id++,
+      productId: productId,
+      quantity: quantity 
+    })
   }
 
-  changeQuantity(productId: number, quantity: number): void {
-    if (!this.cart.has(productId)){
+  changeQuantity(cartItemId: number, quantity: number): void {
+    const cartItemIndex = this.cart.findIndex((item) => (item.id == cartItemId));
+
+    if (cartItemIndex == -1){
       const err = new Error();
-      err.name = "productNotInCartError";
-      err.message = "product does not exist in cart";
+      err.name = "cartItemNotInCartError";
+      err.message = "cart item does not exist in cart";
       throw err;
     }
 
-    if (quantity == 0){
+    if (quantity <= 0){
       alert('removed from cart!');
-      this.cart.delete(productId);
+      this.cart.splice(cartItemIndex, 1);
     }else{
-      this.cart.set(productId, quantity);
+      this.cart[cartItemIndex].quantity = quantity;
     }
   }
 
-  delFromCart(productId: number): void {
-    this.cart.delete(productId);
+  delFromCart(cartItemId: number): void {
+    const cartItemIndex = this.cart.findIndex((item) => (item.id == cartItemId));
+
+    if (cartItemIndex == -1){
+      const err = new Error();
+      err.name = "cartItemNotInCartError";
+      err.message = "cart item does not exist in cart";
+      throw err;
+    }
+    this.cart.splice(cartItemIndex, 1);
   }
 
   reset(): void {
-    this.cart = new Map()
+    this.cart = [];
   }
 }

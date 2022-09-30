@@ -7,3 +7,5 @@ export type Product = {
 }
 
 export type AddedProduct = Product & {addedToCart: boolean}
+
+export type QuantityProduct = Product & {quantity: number}

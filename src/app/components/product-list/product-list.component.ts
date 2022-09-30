@@ -45,7 +45,9 @@ export class ProductListComponent implements OnInit {
       const cart = this.cartService.getCart();
 
       for (let product of (res as Product[])){
-        (product as AddedProduct).addedToCart = cart.has(product.id);
+        if (cart.findIndex((item) => item.productId == product.id)){
+          (product as AddedProduct).addedToCart = true;
+        }
 
         this.productList.push(product as AddedProduct);
       }

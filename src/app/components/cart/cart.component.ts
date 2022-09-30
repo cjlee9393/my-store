@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Product } from 'src/app/models/product';
+import { CartItem } from 'src/app/models/cart-item';
 import { CartService } from './cart.service';
 import { ProductListService } from '../product-list/product-list.service'
+
 import * as e from 'cors';
+import { existsSync } from 'fs';
 
 @Component({
   selector: 'app-cart',
@@ -11,7 +14,8 @@ import * as e from 'cors';
 })
 export class CartComponent implements OnInit {
   productList: Product[] = [];
-  cart: Map<number, number> = new Map();
+  cart: CartItem[] = [];
+
   keys: number[] = [];
   quantities: number[] = [];
   total: number = 0;
@@ -27,11 +31,11 @@ export class CartComponent implements OnInit {
       this.productList = res;
 
       this.cart = this.cartService.getCart();
-      this.keys = [...this.cart.keys()];
-      
-      this.quantities = [...Array(this.productList.length + 1)];
+      this.keys = this.cart.map((item) => item.id);
+
+      this.quantities = [...Array(this.keys.length)];
       for (let key of this.keys){
-        this.quantities[key] = (this.cart.get(key) as number);
+        this.quantities[key] = (this.cart[this.cart.findIndex((item => item.id == key))].quantity);
       }
 
       this.total = this.getTotal();
@@ -42,11 +46,11 @@ export class CartComponent implements OnInit {
 
   changeQuantity(id: number, quantity: number): void {
     if (!quantity){
-      this.keys.splice(this.keys.indexOf(id), 1)
+      this.keys.splice(this.keys.indexOf(id), 1);
 
-      this.quantities.splice(id, 1)
+      this.quantities[id] = 0;
 
-      this.cartService.delFromCart(id)
+      this.cartService.delFromCart(id);
 
       alert('Removed from cart!')
     }else{
@@ -57,48 +61,41 @@ export class CartComponent implements OnInit {
   }
 
   getProduct(id: number): Product {
-    for (let product of this.productList){
-      if (product.id == id) return product;
+    const productId = this.cart[this.cart.findIndex((item) => item.id == id)].productId;
+    const idx = this.productList.findIndex((item) => item.id == productId);
+
+    if (idx == -1){
+      const err = new Error();
+      err.name = "ProductNotExistError"
+      err.message = "product that matches id does not exist"
+      throw err
     }
     
-    const err = new Error();
-    err.name = "ProductNotExistError"
-    err.message = "product that matches id does not exist"
-    throw err
+    return this.productList[idx];
   }
 
   getTotal(): number {
-    const cart = this.cart;
-
     let res = 0;
 
-    for (let id of cart.keys()){
-      let pidx = 0;
-      let price = 0;
-      let flag = false;
+    const prices =  this.keys.map((key) => this.cart[this.cart.findIndex(item => item.id == key)].productId)
+                             .map((id) => this.productList[this.productList.findIndex(item => item.id == id)].price);
 
-      for (pidx=0; pidx<this.productList.length; pidx++){
-        if (this.productList[pidx].id == id){
-          price = this.productList[pidx].price;
-          flag = true;
-          break;
-        }
-      }
+    // console.log('prices: ', prices)
+    // console.log('quantities: ', this.quantities)
+    // const keys = this.cart.map((item) => item.productId);
+    // console.log('keys: ', this.keys);
 
-      if (!flag){
-        const err = new Error();
-        err.name = "ProductNotExistError";
-        err.message = "Product that matches id does not exist";
-        throw err;
-      }else{
-        res += price * (cart.get(id) as number);
-      }
+    for (let key of this.keys){
+      const price = this.getProduct(key).price;
+      const quantity = this.quantities[key];
+
+      res += price * quantity;
     }
-
+    
     return res;
   }
 
-  getCart(): Map<number, number> {
+  getCart(): CartItem[] {
     return this.cartService.getCart();
   }
 }
