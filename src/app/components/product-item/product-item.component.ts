@@ -2,7 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CartService } from '../cart/cart.service';
 import { ProductItemDetailService } from '../product-item-detail/product-item-detail.service';
 import { Input } from '@angular/core';
-import { Product } from 'src/app/models/product';
+import { AddedProduct, Product } from 'src/app/models/product';
+import { Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-product-item',
@@ -10,8 +11,10 @@ import { Product } from 'src/app/models/product';
   styleUrls: ['./product-item.component.css']
 })
 export class ProductItemComponent implements OnInit {
-  @Input() product: Product;
-  quantity: number = 1;
+  @Input() product: AddedProduct;
+  @Output() mark: EventEmitter<number> = new EventEmitter();
+  @Output() see: EventEmitter<number> = new EventEmitter();
+  quantity: number;
 
   constructor(private cartService: CartService, private productItemDetailService: ProductItemDetailService) { 
     this.product = {
@@ -19,8 +22,11 @@ export class ProductItemComponent implements OnInit {
       name: "name",
       price: 0,
       url: "url",
-      description: "description"
+      description: "description",
+      addedToCart: false
     }
+
+    this.quantity = 1;
   }
 
   ngOnInit(): void {
@@ -29,13 +35,18 @@ export class ProductItemComponent implements OnInit {
   addToCart(productId: number, quantity: number): void {
     try{
       this.cartService.addToCart(productId, quantity);
+
+      this.mark.emit(productId);
+
       alert("Added to cart!");
     }catch(err){
       alert((err as Error).message);
     }
   }
 
-  setProduct(product: Product){
+  setProduct(product: AddedProduct){
     this.productItemDetailService.setProduct(product);
+
+    this.see.emit(product.id);
   }
 }

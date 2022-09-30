@@ -5,3 +5,5 @@ export type Product = {
     url: string,
     description: string
 }
+
+export type AddedProduct = Product & {addedToCart: boolean}

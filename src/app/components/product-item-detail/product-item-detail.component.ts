@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../cart/cart.service';
 import { ProductItemDetailService } from './product-item-detail.service';
-import { Product } from 'src/app/models/product';
+import { AddedProduct, Product } from 'src/app/models/product';
+import { Input } from '@angular/core';
+import { Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-product-item-detail',
@@ -9,28 +11,31 @@ import { Product } from 'src/app/models/product';
   styleUrls: ['./product-item-detail.component.css']
 })
 export class ProductItemDetailComponent implements OnInit {
-  product: Product;
+  @Input() product: AddedProduct;
   quantity: number;
+  @Output() mark: EventEmitter<number> = new EventEmitter();
 
   constructor(private cartService: CartService, private productItemDetailService: ProductItemDetailService) { 
     this.product = {
       id: 0,
       name: "name",
-      price: 100,
+      price: 0,
       url: "url",
-      description: "description"
+      description: "description",
+      addedToCart: false
     }
 
     this.quantity = 1;
   }
 
-  ngOnInit(): void {
-    this.product = this.productItemDetailService.getProduct();
-  }
+  ngOnInit(): void { }
 
   addToCart(productId: number, quantity: number): void {
     try{
       this.cartService.addToCart(productId, quantity);
+
+      this.mark.emit(productId);
+
       alert("Added to cart!");
     }catch(err){
       alert((err as Error).message);

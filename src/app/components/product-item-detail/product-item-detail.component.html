@@ -11,6 +11,9 @@
             <option value=3>3</option>
             <option value=4>4</option>
         </select><br>
+        <div *ngIf="product.addedToCart">
+            This product is in cart
+        </div>
         <button (click)="addToCart(product.id, quantity)" class="select-input"> Add To Cart </button><br>
         <a routerLink="/">Go to Product List</a>
     </div>

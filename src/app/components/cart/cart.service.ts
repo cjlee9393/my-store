@@ -21,7 +21,7 @@ export class CartService {
     }
 
     if (this.cart.has(productId)){
-      this.cart.set(productId, this.cart.get(productId) as number + quantity);
+      this.cart.set(productId, this.cart.get(productId)! + quantity);
     }else{
       this.cart.set(productId, quantity)
     }

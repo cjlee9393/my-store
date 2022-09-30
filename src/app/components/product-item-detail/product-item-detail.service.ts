@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Product } from 'src/app/models/product';
+import { AddedProduct, Product } from 'src/app/models/product';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductItemDetailService {
-  product: Product;
+  product: AddedProduct;
 
   constructor() {
     this.product = {
@@ -13,15 +13,16 @@ export class ProductItemDetailService {
       name: "name",
       price: 100,
       url: "url",
-      description: "description"
+      description: "description",
+      addedToCart: false
     }
   }
 
-  getProduct(): Product {
+  getProduct(): AddedProduct {
     return this.product;
   }
 
-  setProduct(product: Product): void {
+  setProduct(product: AddedProduct): void {
     this.product = product;
   }
 }

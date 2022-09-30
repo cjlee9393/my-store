@@ -1,5 +1,5 @@
 <div class="product-container">
-    <a (click)="setProduct(product)" routerLink="/detail"><img class="product-image" src="{{ product.url }}"></a>
+    <a (click)="setProduct(product)"><img class="product-image" src="{{ product.url }}"></a>
     <p>{{ product.name }}</p>
     <p>${{ product.price }}</p>
     <select class="select-input" name="quantity" [(ngModel)]="quantity">
@@ -8,5 +8,8 @@
         <option value=3>3</option>
         <option value=4>4</option>
     </select>
+    <div *ngIf="product.addedToCart">
+        This product is in cart
+    </div>
     <button (click)="addToCart(product.id, quantity)" class="select-input"> Add to Cart </button>
 </div>
