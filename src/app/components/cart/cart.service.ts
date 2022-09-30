@@ -13,6 +13,14 @@ export class CartService {
   }
 
   addToCart(productId: number, quantity: number): void {
+    console.log(`cart.service.addToCart(${productId}, ${quantity})`);
+    if (typeof quantity === 'string' || (quantity as any) instanceof String){
+      const err = new Error();
+      err.name = "quantityNotNumberError";
+      err.message = "quantity is not a number";
+      throw err;
+    }
+
     if (quantity <= 0){
       const err = new Error();
       err.name = "quantityNotPositiveError";

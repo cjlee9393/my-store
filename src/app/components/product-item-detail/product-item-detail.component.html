@@ -6,10 +6,10 @@
         <p> ${{ product.price }} </p>
         <p> quantity </p>
         <select class="select-input" name="quantity" [(ngModel)]="quantity">
-            <option value=1>1</option>
-            <option value=2>2</option>
-            <option value=3>3</option>
-            <option value=4>4</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
         </select><br>
         <div *ngIf="product.addedToCart">
             This product is in cart
