@@ -3,4 +3,4 @@
             <app-product-item *ngFor="let product of productList" [product]="product" (mark)="markAsAdded($any($event))" (see)="seeDetail($any($event))"></app-product-item>
     </div>
 </div>
-<app-product-item-detail *ngIf="isShowProductItemDetail" [product]="product"></app-product-item-detail>
+<app-product-item-detail *ngIf="isShowProductItemDetail" [product]="product" (mark)="markAsAdded($any($event))"></app-product-item-detail>

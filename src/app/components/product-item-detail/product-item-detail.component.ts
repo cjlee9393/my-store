@@ -12,7 +12,7 @@ import { Output, EventEmitter } from '@angular/core';
 })
 export class ProductItemDetailComponent implements OnInit {
   @Input() product: AddedProduct;
-  quantity: number;
+  quantity: string;
   @Output() mark: EventEmitter<number> = new EventEmitter();
 
   constructor(private cartService: CartService, private productItemDetailService: ProductItemDetailService) { 
@@ -25,14 +25,14 @@ export class ProductItemDetailComponent implements OnInit {
       addedToCart: false
     }
 
-    this.quantity = 1;
+    this.quantity = '1';
   }
 
   ngOnInit(): void { }
 
-  addToCart(productId: number, quantity: number): void {
+  addToCart(productId: number, quantity: string): void {
     try{
-      this.cartService.addToCart(productId, quantity);
+      this.cartService.addToCart(productId, +quantity);
 
       this.mark.emit(productId);
 
