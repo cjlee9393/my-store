@@ -45,6 +45,8 @@ export class CartComponent implements OnInit {
       this.quantities.splice(id, 1)
 
       this.cartService.delFromCart(id)
+
+      alert('Removed from cart!')
     }else{
       this.cartService.changeQuantity(id, quantity);
     }
